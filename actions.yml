@@ -8,7 +8,7 @@ actions:
       the repository filesystem access check.  Use the other options to create
       the snapshot.
     options:
-      repository:
+      repository: s3_repository
       # Leaving name blank will result in the default 'curator-%Y%m%d%H%M%S'
       name: logstash-%Y%m%d%H%M%S
       ignore_unavailable: False
