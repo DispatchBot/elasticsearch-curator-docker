@@ -17,4 +17,4 @@ COPY actions.yml actions.yml
 COPY curator.yml curator.yml
 
 
-CMD ["/usr/bin/curator", "--config", "./curator.yml", "--dry-run", "./actions.yml"]
+CMD ["/usr/bin/curator", "--config", "./curator.yml", "./actions.yml"]
