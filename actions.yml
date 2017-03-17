@@ -121,7 +121,7 @@ actions:
   6:
     action: forcemerge
     description: >-
-      forceMerge logstash- prefixed indices older than 2 days (based on index
+      forceMerge elasticbeat- prefixed indices older than 2 days (based on index
       creation_date) to 1 segment per shard.  Delay 120 seconds between each
       forceMerge operation to allow the cluster to quiesce.
       This action will ignore indices already forceMerged to the same or fewer
@@ -144,6 +144,31 @@ actions:
       unit_count: 2
       exclude:
   7:
+    action: forcemerge
+    description: >-
+      forceMerge statsd- prefixed indices older than 2 days (based on index
+      creation_date) to 1 segment per shard.  Delay 120 seconds between each
+      forceMerge operation to allow the cluster to quiesce.
+      This action will ignore indices already forceMerged to the same or fewer
+      number of segments per shard, so the 'forcemerged' filter is unneeded.
+    options:
+      max_num_segments: 1
+      delay: 120
+      timeout_override:
+      continue_if_exception: False
+      disable_action: False
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: statsd-
+      exclude:
+    - filtertype: age
+      source: creation_date
+      direction: older
+      unit: days
+      unit_count: 2
+      exclude:
+  8:
     action: snapshot
     description: >-
       Snapshot logstash- prefixed indices older than 1 day (based on index
