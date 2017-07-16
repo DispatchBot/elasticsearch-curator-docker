@@ -48,6 +48,29 @@ actions:
   3:
     action: delete_indices
     description: >-
+      Delete indices older than 60 days, for db-schedules-
+      prefixed indices. Ignore the error if the filter does not result in an
+      actionable list of indices (ignore_empty_list) and exit cleanly.
+    options:
+      ignore_empty_list: True
+      timeout_override:
+      continue_if_exception: False
+      disable_action: False
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: db-schedules-
+      exclude:
+    - filtertype: age
+      source: name
+      direction: older
+      timestring: '%Y.%m'
+      unit: days
+      unit_count: 120
+      exclude:
+  4:
+    action: delete_indices
+    description: >-
       Delete indices older than 60 days, for elasticbeat-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
@@ -68,7 +91,7 @@ actions:
       unit: days
       unit_count: 60
       exclude:
-  4:
+  5:
     action: forcemerge
     description: >-
       forceMerge logstash- prefixed indices older than 2 days (based on index
@@ -93,7 +116,7 @@ actions:
       unit: days
       unit_count: 2
       exclude:
-  5:
+  6:
     action: forcemerge
     description: >-
       forceMerge metricbeat- prefixed indices older than 2 days (based on index
@@ -118,7 +141,7 @@ actions:
       unit: days
       unit_count: 2
       exclude:
-  6:
+  7:
     action: forcemerge
     description: >-
       forceMerge elasticbeat- prefixed indices older than 2 days (based on index
@@ -143,7 +166,7 @@ actions:
       unit: days
       unit_count: 2
       exclude:
-  7:
+  8:
     action: forcemerge
     description: >-
       forceMerge statsd- prefixed indices older than 2 days (based on index
@@ -168,7 +191,32 @@ actions:
       unit: days
       unit_count: 2
       exclude:
-  8:
+  9:
+    action: forcemerge
+    description: >-
+      forceMerge db-events- prefixed indices older than 33 days (based on index
+      creation_date) to 1 segment per shard.  Delay 120 seconds between each
+      forceMerge operation to allow the cluster to quiesce.
+      This action will ignore indices already forceMerged to the same or fewer
+      number of segments per shard, so the 'forcemerged' filter is unneeded.
+    options:
+      max_num_segments: 1
+      delay: 120
+      timeout_override:
+      continue_if_exception: False
+      disable_action: False
+    filters:
+    - filtertype: pattern
+      kind: prefix
+      value: db-events-
+      exclude:
+    - filtertype: age
+      source: creation_date
+      direction: older
+      unit: days
+      unit_count: 33
+      exclude:
+  10:
     action: snapshot
     description: >-
       Snapshot logstash- prefixed indices older than 1 day (based on index
