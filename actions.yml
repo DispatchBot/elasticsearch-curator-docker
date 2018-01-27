@@ -214,7 +214,7 @@ actions:
       source: creation_date
       direction: older
       unit: days
-      unit_count: 33
+      unit_count: 2
       exclude:
   10:
     action: snapshot
@@ -238,7 +238,7 @@ actions:
     filters:
     - filtertype: pattern
       kind: regex
-      value: '^(logstash-|statsd-).*$'
+      value: '^(logstash-|statsd-|db-events-).*$'
       exclude:
     - filtertype: age
       source: creation_date
