@@ -25,7 +25,7 @@ actions:
   2:
     action: delete_indices
     description: >-
-      Delete indices older than 60 days, for metricbeat-
+      Delete indices older than X days, for metricbeat-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
     options:
@@ -43,12 +43,12 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: days
-      unit_count: 60
+      unit_count: 45
       exclude:
   3:
     action: delete_indices
     description: >-
-      Delete indices older than 60 days, for db-schedules-
+      Delete indices older than X days, for db-schedules-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
     options:
@@ -66,12 +66,12 @@ actions:
       direction: older
       timestring: '%Y.%m'
       unit: days
-      unit_count: 120
+      unit_count: 45
       exclude:
   4:
     action: delete_indices
     description: >-
-      Delete indices older than 60 days, for elasticbeat-
+      Delete indices older than X days, for elasticbeat-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
     options:
@@ -89,7 +89,7 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: days
-      unit_count: 60
+      unit_count: 30
       exclude:
   5:
     action: forcemerge
@@ -194,14 +194,14 @@ actions:
   9:
     action: forcemerge
     description: >-
-      forceMerge db-events- prefixed indices older than 33 days (based on index
-      creation_date) to 1 segment per shard.  Delay 120 seconds between each
+      forceMerge db-events- prefixed indices older than 2 days (based on index
+      creation_date) to 1 segment per shard.  Delay 60 seconds between each
       forceMerge operation to allow the cluster to quiesce.
       This action will ignore indices already forceMerged to the same or fewer
       number of segments per shard, so the 'forcemerged' filter is unneeded.
     options:
       max_num_segments: 1
-      delay: 120
+      delay: 60
       timeout_override:
       continue_if_exception: False
       disable_action: False
@@ -249,7 +249,7 @@ actions:
   11:
     action: delete_indices
     description: >-
-      Delete indices older than 10 days, for .monitoring-
+      Delete indices older than X days, for .monitoring-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
     options:
@@ -267,12 +267,12 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: days
-      unit_count: 10
+      unit_count: 8
       exclude:
   12:
     action: delete_indices
     description: >-
-      Delete indices older than 10 days, for .monitoring-
+      Delete indices older than X days, for .monitoring-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
     options:
@@ -290,12 +290,12 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: days
-      unit_count: 10
+      unit_count: 8
       exclude:
   13:
     action: delete_indices
     description: >-
-      Delete indices older than 10 days, for .monitoring-
+      Delete indices older than X days, for .monitoring-
       prefixed indices. Ignore the error if the filter does not result in an
       actionable list of indices (ignore_empty_list) and exit cleanly.
     options:
@@ -313,7 +313,7 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: days
-      unit_count: 10
+      unit_count: 8
       exclude:
   14:
     action: forcemerge
@@ -325,7 +325,7 @@ actions:
       number of segments per shard, so the 'forcemerged' filter is unneeded.
     options:
       max_num_segments: 1
-      delay: 120
+      delay: 60
       timeout_override:
       continue_if_exception: False
       disable_action: False
